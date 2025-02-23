@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora com C e Mongoose</title>
+</head>
+<body>
+    <h1>Calculadora</h1>
+    <form id="calcForm">
+        <label>Número 1:</label>
+        <input type="number" id="num1" name="num1" required>
+
+        <label>Operação:</label>
+        <select id="operacao" name="operacao">
+            <option value="soma">+</option>
+            <option value="subtracao">-</option>
+            <option value="multiplicacao">*</option>
+            <option value="divisao">/</option>
+        </select>
+
+        <label>Número 2:</label>
+        <input type="number" id="num2" name="num2" required>
+
+        <button type="submit">Calcular</button>
+    </form>
+
+    <h2>Resultado:</h2>
+    <p id="resultado"></p>
+
+    <script>
+        document.getElementById("calcForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Evita recarregar a página
+
+            let formData = new FormData(this);
+
+            fetch("http://localhost:8080", {
+                method: "POST",
+                body: new URLSearchParams(formData) // Envia como x-www-form-urlencoded
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("resultado").innerText = `Resultado: ${data.resultado}`;
+            })
+            .catch(error => {
+                document.getElementById("resultado").innerText = "Erro na requisição";
+            });
+        });
+    </script>
+</body>
+</html>
