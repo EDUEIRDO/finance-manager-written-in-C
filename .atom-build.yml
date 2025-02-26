@@ -1,0 +1,4 @@
+cmd: "gcc"
+args: ["{FILE_ACTIVE}", "mongoose.c", "-o", "{FILE_ACTIVE_NAME_BASE}.out", "-I."]
+sh: true
+post_cmd: ["./{FILE_ACTIVE_NAME_BASE}.out"]

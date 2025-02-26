@@ -9,7 +9,7 @@ static void fn(struct mg_connection *c, int ev, void *ev_data)
 {
   if (ev == MG_EV_HTTP_MSG)
   {
-    strcut mg_http_message *hm = (struct mg_http_message *) ev_data;
+    struct mg_http_message *hm = (struct mg_http_message *) ev_data;
 
     // Verify if is a OPTIONS request
     if (mg_strcmp(hm->method, mg_str("OPTIONS")) == 0)
@@ -21,7 +21,7 @@ static void fn(struct mg_connection *c, int ev, void *ev_data)
           "Content-Length: 0\r\n"
           "\r\n",  // Empty body if necessary
           "");
-          return
+          return;
     }
 
     // Manual URI comparison
@@ -68,7 +68,8 @@ static void fn(struct mg_connection *c, int ev, void *ev_data)
             "Access-Control-Allow-Origin: *\r\n",
             "{ \"num1\": %g, \"num2\": %g, \"operacao\": \"%s\", \"resultado\": %g }",
             num1, num2, op, resultado);
-    } else
+    }
+    else
     {
         // If the route is not /calculate, it responds with error and CORS
         mg_http_reply(c, 404,
@@ -90,6 +91,6 @@ int main()
   {
     mg_mgr_poll(&mgr, 1000);
   }
-  mg_mgre_free(&mgr);
+  mg_mgr_free(&mgr);
   return 0;
 }

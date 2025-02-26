@@ -34,7 +34,7 @@
 
             let formData = new FormData(this);
 
-            fetch("http://localhost:8080", {
+            fetch("http://localhost:8000/calcular", {
                 method: "POST",
                 body: new URLSearchParams(formData) // Envia como x-www-form-urlencoded
             })
